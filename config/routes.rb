@@ -1,4 +1,7 @@
 Rails.application.routes.draw do
+  resources :flows
+  root 'request_applications#index'
+
   resources :flow_orders
   resources :request_applications
   resources :depts

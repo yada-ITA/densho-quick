@@ -2,7 +2,7 @@
 
 <h1>Listing Request Applications</h1>
 
-<table>
+<table class="table">
   <thead>
     <tr>
       <th>Management no</th>
@@ -23,6 +23,12 @@
         <td><%= request_application.filename %></td>
         <td><%= request_application.request_date %></td>
         <td><%= request_application.preferred_date %></td>
+
+        <td>
+          
+
+        </td>
+
         <td><%= request_application.close %></td>
         <td><%= link_to 'Show', request_application %></td>
         <td><%= link_to 'Edit', edit_request_application_path(request_application) %></td>
