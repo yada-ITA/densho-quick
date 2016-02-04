@@ -5,6 +5,7 @@ class RequestApplicationsController < ApplicationController
   # GET /request_applications.json
   def index
     @request_applications = RequestApplication.all
+    @flow_orders = FlowOrder.order_list
   end
 
   # GET /request_applications/1

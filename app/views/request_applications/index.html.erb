@@ -11,6 +11,13 @@
       <th>Request date</th>
       <th>Preferred date</th>
       <th>Close</th>
+
+        <td>
+         <% @flow_orders.each do |flow_order| %>
+              <%= flow_order.dept.try(:name).presence || "プロジェクト" %>
+         <% end %>
+
+        </td>
       <th colspan="3"></th>
     </tr>
   </thead>
@@ -23,13 +30,8 @@
         <td><%= request_application.filename %></td>
         <td><%= request_application.request_date %></td>
         <td><%= request_application.preferred_date %></td>
-
-        <td>
-          
-
-        </td>
-
         <td><%= request_application.close %></td>
+        <td></td>
         <td><%= link_to 'Show', request_application %></td>
         <td><%= link_to 'Edit', edit_request_application_path(request_application) %></td>
         <td><%= link_to 'Destroy', request_application, method: :delete, data: { confirm: 'Are you sure?' } %></td>
