@@ -62,13 +62,14 @@ class FlowOrdersController < ApplicationController
   end
 
   private
-    # Use callbacks to share common setup or constraints between actions.
-    def set_flow_order
-      @flow_order = FlowOrder.find(params[:id])
-    end
 
-    # Never trust parameters from the scary internet, only allow the white list through.
-    def flow_order_params
-      params.require(:flow_order).permit(:order, :project_flg, :dept_id)
-    end
+  # Use callbacks to share common setup or constraints between actions.
+  def set_flow_order
+    @flow_order = FlowOrder.find(params[:id])
+  end
+
+  # Never trust parameters from the scary internet, only allow the white list through.
+  def flow_order_params
+    params.require(:flow_order).permit(:order, :project_flg, :dept_id)
+  end
 end

@@ -1,4 +1,5 @@
 Rails.application.routes.draw do
+  resources :progresses
   resources :flows
   root 'request_applications#index'
 
