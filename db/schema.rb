@@ -42,7 +42,7 @@ ActiveRecord::Schema.define(version: 20160204025946) do
   add_index "flows", ["request_application_id"], name: "index_flows_on_request_application_id"
 
   create_table "request_applications", force: :cascade do |t|
-    t.integer  "management_no"
+    t.string  "management_no"
     t.boolean  "emargency"
     t.string   "filename"
     t.date     "request_date"
