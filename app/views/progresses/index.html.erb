@@ -15,7 +15,7 @@
   <tbody>
     <% @progresses.each do |progress| %>
       <tr>
-        <td><%= progress.flow %></td>
+        <td><%= progress.flow.id %></td>
         <td><%= progress.in_date %></td>
         <td><%= progress.out_date %></td>
         <td><%= link_to 'Show', progress %></td>

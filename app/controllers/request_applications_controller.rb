@@ -26,9 +26,11 @@ class RequestApplicationsController < ApplicationController
   # POST /request_applications.json
   def create
     @request_application = RequestApplication.new(request_application_params)
+    @flow = @request_application.flows.build
+    @flow.first
 
     respond_to do |format|
-      if @request_application.save
+      if @request_application.save && @flow.save
         format.html { redirect_to @request_application, notice: 'Request application was successfully created.' }
         format.json { render :show, status: :created, location: @request_application }
       else
@@ -71,6 +73,6 @@ class RequestApplicationsController < ApplicationController
 
   # Never trust parameters from the scary internet, only allow the white list through.
   def request_application_params
-    params.require(:request_application).permit(:management_no, :emargency, :filename, :request_date, :preferred_date, :close)
+    params.require(:request_application).permit(:management_no, :emargency, :filename, :request_date, :preferred_date, :close, :project_id)
   end
 end

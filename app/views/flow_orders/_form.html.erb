@@ -22,7 +22,7 @@
 
   <div class="field">
     <%= f.label :dept_id %><br>
-    <%= f.collection_select :dept_id, Dept.department, :id, :name , include_blank: true %>
+    <%= f.collection_select :dept_id, Dept.departments, :id, :name , include_blank: true %>
   </div>
 
   <div class="actions">

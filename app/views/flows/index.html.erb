@@ -15,9 +15,9 @@
   <tbody>
     <% @flows.each do |flow| %>
       <tr>
-        <td><%= flow.request_application %></td>
+        <td><%= flow.request_application.try(:id) %></td>
         <td><%= flow.order %></td>
-        <td><%= flow.dept %></td>
+        <td><%= flow.dept.try(:name) %></td>
         <td><%= link_to 'Show', flow %></td>
         <td><%= link_to 'Edit', edit_flow_path(flow) %></td>
         <td><%= link_to 'Destroy', flow, method: :delete, data: { confirm: 'Are you sure?' } %></td>
