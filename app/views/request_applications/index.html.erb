@@ -27,11 +27,11 @@
       <tr>
         <td><%= request_application.management_no %></td>
         <td><%= request_application.project.try(:name) %></td>
-        <td><% if request_application.emargency %>緊急<% end %></td>
+        <td><%= "緊急" if request_application.emargency %></td>
         <td><%= request_application.filename %></td>
         <td><%= request_application.request_date %></td>
         <td><%= request_application.preferred_date %></td>
-        <td><% if request_application.close %>済<% end %></td>
+        <td><%= "済" if request_application.close %></td>
         <td>|</td>
         <% request_application.flows.order(:order).each do |flow| %>
         <td>

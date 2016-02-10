@@ -23,7 +23,7 @@ class Flow < ActiveRecord::Base
       progress.save
       # 次のフローも合わせて生成。最後の時はcloseする。
       next_flow if FlowOrder.maximum('order') > order
-      RequestApplication.closed(flow.request_application_id) if FlowOrder.maximum('order') == order
+      RequestApplication.closed(self.request_application_id) if FlowOrder.maximum('order') == order
     end
   end
 
