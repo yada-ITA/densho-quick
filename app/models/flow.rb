@@ -1,7 +1,7 @@
 class Flow < ActiveRecord::Base
   belongs_to :request_application
   belongs_to :dept
-  has_one :progress
+  has_one :progress, dependent: :destroy
 
   # 初期フローを作成する。
   def init_flow

@@ -1,5 +1,5 @@
 class RequestApplication < ActiveRecord::Base
-  has_many :flows
+  has_many :flows, dependent: :destroy
   belongs_to :project, class_name: "Dept"
 
   def self.closed(id)
