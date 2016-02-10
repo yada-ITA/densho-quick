@@ -48,3 +48,5 @@ group :development do
   gem 'rubocop', require: false
   gem 'rails-erd'
 end
+
+gem 'carrierwave'

@@ -1,6 +1,7 @@
 class RequestApplication < ActiveRecord::Base
   has_many :flows, dependent: :destroy
   belongs_to :project, class_name: "Dept"
+  mount_uploader :filename, FileUploader
 
   def self.closed(id)
     request_application = RequestApplication.find(id)

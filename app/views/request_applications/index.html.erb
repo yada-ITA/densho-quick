@@ -28,7 +28,7 @@
         <td><%= request_application.management_no %></td>
         <td><%= request_application.project.try(:name) %></td>
         <td><%= "緊急" if request_application.emargency %></td>
-        <td><%= request_application.filename %></td>
+        <td><%= (link_to "Download" , request_application.filename_url) if request_application.filename_url.present? %></td>
         <td><%= request_application.request_date %></td>
         <td><%= request_application.preferred_date %></td>
         <td><%= "済" if request_application.close %></td>

@@ -18,3 +18,5 @@
 
 /vendor/bundle
 /*.pdf
+
+/public/uploads
