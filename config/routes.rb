@@ -1,12 +1,16 @@
 Rails.application.routes.draw do
+  root 'request_applications#index'
+  resources :request_applications
+  get 'request_applications/:id/regist' => 'request_applications#progress', as: :regist_progress
+
   resources :progresses
   resources :flows
-  root 'request_applications#index'
-
   resources :flow_orders
-  resources :request_applications
   resources :depts
   resources :users
+
+
+
   # The priority is based upon order of creation: first created -> highest priority.
   # See how all your routes lay out with "rake routes".
 

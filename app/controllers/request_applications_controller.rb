@@ -1,5 +1,5 @@
 class RequestApplicationsController < ApplicationController
-  before_action :set_request_application, only: [:show, :edit, :update, :destroy]
+  before_action :set_request_application, only: [:show, :edit, :update, :destroy, :progress]
 
   # GET /request_applications
   # GET /request_applications.json
@@ -26,11 +26,12 @@ class RequestApplicationsController < ApplicationController
   # POST /request_applications.json
   def create
     @request_application = RequestApplication.new(request_application_params)
-    @flow = @request_application.flows.build
-    @flow.first
+    flow = @request_application.flows.build
+    # 初期フロー生成
+    flow.init_flow
 
     respond_to do |format|
-      if @request_application.save && @flow.save
+      if @request_application.save && flow.save
         format.html { redirect_to @request_application, notice: 'Request application was successfully created.' }
         format.json { render :show, status: :created, location: @request_application }
       else
@@ -60,6 +61,16 @@ class RequestApplicationsController < ApplicationController
     @request_application.destroy
     respond_to do |format|
       format.html { redirect_to request_applications_url, notice: 'Request application was successfully destroyed.' }
+      format.json { head :no_content }
+    end
+  end
+
+  def progress
+    # 最新flowのprogressを生成する。
+    @request_application.flows.last.proceed
+
+    respond_to do |format|
+      format.html { redirect_to request_applications_url, notice: 'Request application was successfully progress changed.' }
       format.json { head :no_content }
     end
   end
