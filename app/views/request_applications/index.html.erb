@@ -35,9 +35,8 @@
         <td>|</td>
         <% request_application.flows.order(:order).each do |flow| %>
         <td>
-          <%= flow.progress.try(:in_date) || (link_to 'IN', regist_progress_path((request_application))) %> 
-          <br>
-          <%= flow.progress.try(:out_date) || (link_to 'OUT', regist_progress_path((request_application))) %> 
+          <%= flow.progress.try(:in_date) || (link_to 'Start', regist_progress_path((request_application))) %><br>
+          <%= ( flow.progress.try(:out_date) || (link_to 'End', regist_progress_path((request_application))) ) unless flow.progress.try(:in_date).blank? %> 
         </td>
          <% end %>
          <% (@flow_orders.count - request_application.flows.count).times do %>
