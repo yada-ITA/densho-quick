@@ -25,4 +25,4 @@ FlowOrder.create([
 
 Flow.delete_all
 Progress.delete_all
-Request_application.delete_all
+RequestApplication.delete_all
