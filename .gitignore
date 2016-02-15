@@ -17,3 +17,6 @@
 /tmp
 
 /vendor/bundle
+/*.pdf
+
+/public/uploads
