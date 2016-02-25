@@ -8,6 +8,7 @@ class Flow < ActiveRecord::Base
     first_order = FlowOrder.order_list.first
     self.order = first_order.order
     self.dept_id = first_order.dept_id
+    self.history_no = 1
   end
 
   # 進捗を進める
@@ -49,14 +50,5 @@ class Flow < ActiveRecord::Base
 
   # 前のフローに戻る
   def back_flow
-    flow = Flow.new
-    flow.request_application_id = request_application_id
-    flow.order = order + 1
-    flow.dept_id = if FlowOrder.find_by(order: flow.order).project_flg
-                     RequestApplication.find(request_application_id).project_id
-                   else
-                     FlowOrder.find_by(order: flow.order).dept_id
-                   end
-    flow.save
   end
 end
