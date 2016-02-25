@@ -10,6 +10,7 @@ class Flow < ActiveRecord::Base
     self.dept_id = first_order.dept_id
   end
 
+  # 進捗を進める
   def proceed
     # 進捗状況が紐付いていない時は、新たな進捗情報を作成する
     if progress.nil?
@@ -27,6 +28,14 @@ class Flow < ActiveRecord::Base
     end
   end
 
+  # 進捗を戻す
+  def retreat
+  end
+
+
+  private
+
+  #次のフローへ進む
   def next_flow
     flow = Flow.new
     flow.request_application_id = request_application_id
@@ -38,4 +47,21 @@ class Flow < ActiveRecord::Base
                    end
     flow.save
   end
+
+
+  #前のフローに戻る
+  def back_flow
+    flow = Flow.new
+    flow.request_application_id = request_application_id
+    flow.order = order + 1
+    flow.dept_id = if FlowOrder.find_by(order: flow.order).project_flg
+                     RequestApplication.find(request_application_id).project_id
+                   else
+                     FlowOrder.find_by(order: flow.order).dept_id
+                   end
+    flow.save
+  end
+
+
+
 end
