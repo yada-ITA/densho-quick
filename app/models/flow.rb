@@ -40,6 +40,7 @@ class Flow < ActiveRecord::Base
     flow = Flow.new
     flow.request_application_id = request_application_id
     flow.order = order + 1
+    flow.history_no = history_no + 1
     flow.dept_id = if FlowOrder.find_by(order: flow.order).project_flg
                      RequestApplication.find(request_application_id).project_id
                    else
