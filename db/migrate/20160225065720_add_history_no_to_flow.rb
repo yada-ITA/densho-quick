@@ -1,4 +1,4 @@
-class AddHistoryToFlow < ActiveRecord::Migration
+class AddHistoryNoToFlow < ActiveRecord::Migration
   def change
     add_column :flows, :history_no, :integer
   end
