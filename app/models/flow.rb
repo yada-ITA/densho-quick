@@ -24,7 +24,7 @@ class Flow < ActiveRecord::Base
       progress.save
       # 次のフローも合わせて生成。最後の時はcloseする。
       next_flow if FlowOrder.maximum('order') > order
-      RequestApplication.closed(self.request_application_id) if FlowOrder.maximum('order') == order
+      RequestApplication.closed(request_application_id) if FlowOrder.maximum('order') == order
     end
   end
 
@@ -32,10 +32,9 @@ class Flow < ActiveRecord::Base
   def retreat
   end
 
-
   private
 
-  #次のフローへ進む
+  # 次のフローへ進む
   def next_flow
     flow = Flow.new
     flow.request_application_id = request_application_id
@@ -48,8 +47,7 @@ class Flow < ActiveRecord::Base
     flow.save
   end
 
-
-  #前のフローに戻る
+  # 前のフローに戻る
   def back_flow
     flow = Flow.new
     flow.request_application_id = request_application_id
@@ -61,7 +59,4 @@ class Flow < ActiveRecord::Base
                    end
     flow.save
   end
-
-
-
 end
