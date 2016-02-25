@@ -44,7 +44,7 @@
           </td>
          <% end %>
         <td><%= link_to 'Show', request_application %>
-        <%= link_to 'Edit', edit_request_application_path(request_application) %>
+        <%= (link_to 'Edit', edit_request_application_path(request_application)) unless request_application.close %>
         <%= link_to 'Destroy', request_application, method: :delete, data: { confirm: 'Are you sure?' } %></td>
       </tr>
     <% end %>
