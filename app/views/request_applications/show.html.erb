@@ -30,8 +30,14 @@
   <%= @request_application.close %>
 </p>
 
-<!-- -->
+<p>
+  <strong>Memo:</strong>
+  <%= simple_format(@request_application.memo) %>
+</p>
 
+<hr>
+
+<h3>履歴</h3>
 
 <table class="table">
   <thead>
@@ -58,6 +64,5 @@
 </table>
 
 
-<!-- -->
 <%= link_to 'Edit', edit_request_application_path(@request_application) %> |
 <%= link_to 'Back', request_applications_path %>
