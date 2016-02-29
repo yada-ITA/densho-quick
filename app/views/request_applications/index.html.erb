@@ -34,7 +34,6 @@
         <td><%= request_application.preferred_date %></td>
         <td><%= "済" if request_application.close %></td>
         <td>|</td>
-        <!-- order(:order) -->
         <% request_application.flows.latest_flows(request_application.id).each do |flow| %>
         <td>
           <%= flow.progress.try(:in_date) || (link_to 'Start', regist_progress_path((request_application))) %><br>

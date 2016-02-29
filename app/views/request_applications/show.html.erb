@@ -30,5 +30,34 @@
   <%= @request_application.close %>
 </p>
 
+<!-- -->
+
+
+<table class="table">
+  <thead>
+    <tr>
+      <th>History_no</th>
+      <th>Order</th>
+      <th>Dept</th>
+      <th>Start</th>
+      <th>End</th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @request_application.flows.each do |flow| %>
+      <tr>
+        <td><%= flow.history_no %></td>
+        <td><%= flow.order %></td>
+        <td><%= flow.dept.try(:name) %></td>
+         <td><%= flow.progress.try(:in_date) %></td>
+         <td><%= flow.progress.try(:out_date) %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+
+<!-- -->
 <%= link_to 'Edit', edit_request_application_path(@request_application) %> |
 <%= link_to 'Back', request_applications_path %>
