@@ -45,7 +45,7 @@
          <% end %>
         <td><%= link_to 'Show', request_application %>
         <%= (link_to 'Edit', edit_request_application_path(request_application)) unless request_application.close %>
-        <%= link_to 'Destroy', request_application, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+        <%= (link_to 'Destroy', request_application, method: :delete, data: { confirm: 'Are you sure?' })  if request_application.initial? %></td>
         <td><%= link_to "差戻" , reject_progress_path(request_application) if request_application.flows.order(:history_no).last.reject? %></td>
       </tr>
     <% end %>

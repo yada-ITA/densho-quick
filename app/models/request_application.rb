@@ -10,4 +10,8 @@ class RequestApplication < ActiveRecord::Base
     request_application.close = true
     request_application.save
   end
+
+  def initial?
+    self.flows.order(:order).last.history_no == 1
+  end
 end
