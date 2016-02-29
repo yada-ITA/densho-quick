@@ -19,6 +19,7 @@
         </th>
          <% end %>
       <th></th>
+      <th></th>
     </tr>
   </thead>
 
@@ -33,19 +34,20 @@
         <td><%= request_application.preferred_date %></td>
         <td><%= "済" if request_application.close %></td>
         <td>|</td>
-        <% request_application.flows.order(:order).each do |flow| %>
+        <!-- order(:order) -->
+        <% request_application.flows.latest_flows(request_application.id).each do |flow| %>
         <td>
           <%= flow.progress.try(:in_date) || (link_to 'Start', regist_progress_path((request_application))) %><br>
           <%= ( flow.progress.try(:out_date) || (link_to 'End', regist_progress_path((request_application))) ) unless flow.progress.try(:in_date).blank? %> 
         </td>
          <% end %>
-         <% (@flow_orders.count - request_application.flows.count).times do %>
-          <td> 
-          </td>
+         <% (@flow_orders.count - request_application.flows.maximum(:order)).times do %>
+          <td></td>
          <% end %>
         <td><%= link_to 'Show', request_application %>
         <%= (link_to 'Edit', edit_request_application_path(request_application)) unless request_application.close %>
         <%= link_to 'Destroy', request_application, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+        <td><%= link_to "差戻" , reject_progress_path(request_application) if request_application.flows.order(:history_no).last.reject? %></td>
       </tr>
     <% end %>
   </tbody>

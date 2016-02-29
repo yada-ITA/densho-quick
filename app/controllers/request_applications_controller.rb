@@ -1,5 +1,5 @@
 class RequestApplicationsController < ApplicationController
-  before_action :set_request_application, only: [:show, :edit, :update, :destroy, :progress]
+  before_action :set_request_application, only: [:show, :edit, :update, :destroy, :regist, :reject]
 
   # GET /request_applications
   # GET /request_applications.json
@@ -65,9 +65,19 @@ class RequestApplicationsController < ApplicationController
     end
   end
 
-  def progress
-    # 最新flowのprogressを生成する。
+  def regist
+    # 最新flowのprogressを生成する。（進捗を進める）
     @request_application.flows.last.proceed
+
+    respond_to do |format|
+      format.html { redirect_to request_applications_url, notice: 'Request application was successfully progress changed.' }
+      format.json { head :no_content }
+    end
+  end
+
+  def reject
+    # 最新flowのprogressを生成する。(進捗を戻す)
+    @request_application.flows.last.retreat
 
     respond_to do |format|
       format.html { redirect_to request_applications_url, notice: 'Request application was successfully progress changed.' }

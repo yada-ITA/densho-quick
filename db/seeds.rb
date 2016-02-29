@@ -17,10 +17,10 @@ Dept.create([
 # フロー順のマスターデータ
 FlowOrder.delete_all
 FlowOrder.create([
-                   { order: 1,  project_flg: false,  dept_id: 1,   id: 1 },
-                   { order: 2,  project_flg: true,  dept_id: nil, id: 2 },
-                   { order: 3,  project_flg: false,   dept_id: 2,    id: 3 },
-                   { order: 4,  project_flg: false,  dept_id: 1,    id: 4 }
+                   { order: 1,  project_flg: false,  dept_id: 1,  reject_permission: false,  id: 1 },
+                   { order: 2,  project_flg: true,  dept_id: nil, reject_permission: true,  id: 2 },
+                   { order: 3,  project_flg: false,   dept_id: 2, reject_permission: true , id: 3 },
+                   { order: 4,  project_flg: false,  dept_id: 1,  reject_permission: false , id: 4 }
                  ])
 
 Flow.delete_all

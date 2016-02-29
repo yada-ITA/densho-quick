@@ -2,6 +2,7 @@ class Flow < ActiveRecord::Base
   belongs_to :request_application
   belongs_to :dept
   has_one :progress, dependent: :destroy
+  scope :latest_flows, -> (request_application_id) { where(request_application_id: request_application_id).group(:order).having("max(history_no)").order(:order) }
 
   # 初期フローを作成する。
   def init_flow
@@ -31,6 +32,18 @@ class Flow < ActiveRecord::Base
 
   # 進捗を戻す
   def retreat
+    # 戻った直後の進捗は、進捗状況が新たに一つでき、一つフローを戻すイメージ
+    progress = Progress.new
+    progress.flow_id = id
+    progress.in_date = Time.current
+    progress.save
+    # 戻った直後のフローも合わせて生成。
+    back_flow
+  end
+
+  # 差し戻しができるかどうか
+  def reject?
+    FlowOrder.find_by(order: order).reject_permission
   end
 
   private
@@ -51,5 +64,15 @@ class Flow < ActiveRecord::Base
 
   # 前のフローに戻る
   def back_flow
+    flow = Flow.new
+    flow.request_application_id = request_application_id
+    flow.order = order - 1
+    flow.history_no = history_no + 1
+    flow.dept_id = if FlowOrder.find_by(order: flow.order).project_flg
+                     RequestApplication.find(request_application_id).project_id
+                   else
+                     FlowOrder.find_by(order: flow.order).dept_id
+                   end
+    flow.save
   end
 end

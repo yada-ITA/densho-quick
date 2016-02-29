@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160225065720) do
+ActiveRecord::Schema.define(version: 20160225224351) do
 
   create_table "depts", force: :cascade do |t|
     t.string   "name"
@@ -24,8 +24,9 @@ ActiveRecord::Schema.define(version: 20160225065720) do
     t.integer  "order"
     t.boolean  "project_flg"
     t.integer  "dept_id"
-    t.datetime "created_at",  null: false
-    t.datetime "updated_at",  null: false
+    t.datetime "created_at",        null: false
+    t.datetime "updated_at",        null: false
+    t.boolean  "reject_permission"
   end
 
   add_index "flow_orders", ["dept_id"], name: "index_flow_orders_on_dept_id"

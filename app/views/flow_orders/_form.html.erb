@@ -25,6 +25,12 @@
     <%= f.collection_select :dept_id, Dept.departments, :id, :name , include_blank: true %>
   </div>
 
+  <div class="field">
+    <%= f.label :reject_permission %><br>
+    <%= f.check_box :reject_permission %>
+  </div>
+
+
   <div class="actions">
     <%= f.submit %>
   </div>

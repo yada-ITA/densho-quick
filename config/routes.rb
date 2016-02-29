@@ -1,7 +1,9 @@
 Rails.application.routes.draw do
   root 'request_applications#index'
   resources :request_applications
-  get 'request_applications/:id/regist' => 'request_applications#progress', as: :regist_progress
+  get 'request_applications/:id/regist' => 'request_applications#regist', as: :regist_progress
+  get 'request_applications/:id/reject' => 'request_applications#reject', as: :reject_progress
+
 
   resources :progresses
   resources :flows
