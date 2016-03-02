@@ -28,7 +28,7 @@ class RequestApplication < ActiveRecord::Base
   # 中断できるフローの状態かどうか。
   def interrupt_permit?
     # 初期状態ではなく、かつ要求書処理が終了していないときに、フローの一番最初の部署に最新処理がある状態。
-    !initial? && !RequestApplication.find(id).close? && flows.order(:history_no).last.order == 1
+    !initial? && !self.close? && flows.order(:history_no).last.order == 1
   end
 
   def delete_permit?
@@ -39,13 +39,15 @@ class RequestApplication < ActiveRecord::Base
   def interrupt
     # closeは同じ。中断か正常かは、フローの履歴状況で判断する
     self.close = true
-    save
+    self.save
+    # TODO: 時刻もセットする。
+
   end
 
   # 中断しているかどうか
   def interrunpt?
     # 要求書がcloseしていて、かつフローの一番最初の部署に最後の処理がある状態が中断している状態。
-    RequestApplication.find(id).close? && flows.order(:history_no).last.order == 1
+    self.close? && flows.order(:history_no).last.order == 1
   end
 
   private

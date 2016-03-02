@@ -37,8 +37,9 @@
         <td>|</td>
         <% request_application.flows.latest_flows(request_application.id).each do |flow| %>
         <td>
-          <%= flow.progress.try(:in_date) || (link_to 'Start', regist_progress_path((request_application))) %><br>
-          <%= ( flow.progress.try(:out_date) || (link_to 'End', regist_progress_path((request_application))) ) unless flow.progress.try(:in_date).blank? %> 
+          <%= ( flow.progress.try(:in_date) || (link_to 'Start', regist_progress_path(request_application) unless request_application.close?
+ )) %><br>
+          <%= ( flow.progress.try(:out_date) || (link_to 'End', regist_progress_path(request_application) unless (flow.progress.try(:in_date).blank?  ||  request_application.close? ) ) ) %> 
         </td>
          <% end %>
          <% (@flow_orders.count - request_application.flows.maximum(:order)).times do %>
