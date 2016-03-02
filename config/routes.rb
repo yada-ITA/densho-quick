@@ -3,6 +3,7 @@ Rails.application.routes.draw do
   resources :request_applications
   get 'request_applications/:id/regist' => 'request_applications#regist', as: :regist_progress
   get 'request_applications/:id/reject' => 'request_applications#reject', as: :reject_progress
+  get 'request_applications/:id/interrupt' => 'request_applications#interrupt', as: :interrupt_progress
 
 
   resources :progresses

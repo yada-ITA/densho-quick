@@ -11,37 +11,46 @@ class RequestApplication < ActiveRecord::Base
     request_application.save
   end
 
-
   # 通常closeかどうか
   def normal_closed?
-    self.close? && self.flows.order(:history_no).last.order == FlowOrder.maximum(:order)
+    close? && flows.order(:history_no).last.order == FlowOrder.maximum(:order)
   end
 
   # 中断closeかどうか
   def interrupt_closeed?
-    self.close? && self.flows.order(:history_no).last.order != FlowOrder.maximum(:order)
+    close? && flows.order(:history_no).last.order != FlowOrder.maximum(:order)
   end
-
 
   def close_status
-    ("済" if normal_closed? )|| ("中断" if interrupt_closeed? )
+    ("済" if normal_closed?) || ("中断" if interrupt_closeed?)
   end
 
+  # 中断できるフローの状態かどうか。
   def interrupt_permit?
-  #書記状態ではなくが、フローの一番最初の部署に処理がある状態のとき
-   ! initial? &&  self.flows.order(:history_no).last.order == 1
+    # 初期状態ではなく、かつ要求書処理が終了していないときに、フローの一番最初の部署に最新処理がある状態。
+    !initial? && !RequestApplication.find(id).close? && flows.order(:history_no).last.order == 1
   end
 
   def delete_permit?
     initial?
   end
 
+  # 中断closeする
+  def interrupt
+    # closeは同じ。中断か正常かは、フローの履歴状況で判断する
+    self.close = true
+    save
+  end
+
+  # 中断しているかどうか
+  def interrunpt?
+    # 要求書がcloseしていて、かつフローの一番最初の部署に最後の処理がある状態が中断している状態。
+    RequestApplication.find(id).close? && flows.order(:history_no).last.order == 1
+  end
 
   private
 
-    def initial?
-      self.flows.order(:order).last.history_no == 1
-    end
-
-
+  def initial?
+    flows.order(:order).last.history_no == 1
+  end
 end

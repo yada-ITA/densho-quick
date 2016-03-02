@@ -1,5 +1,5 @@
 class RequestApplicationsController < ApplicationController
-  before_action :set_request_application, only: [:show, :edit, :update, :destroy, :regist, :reject]
+  before_action :set_request_application, only: [:show, :edit, :update, :destroy, :regist, :reject, :interrupt]
 
   # GET /request_applications
   # GET /request_applications.json
@@ -81,6 +81,15 @@ class RequestApplicationsController < ApplicationController
 
     respond_to do |format|
       format.html { redirect_to request_applications_url, notice: 'Request application was successfully progress changed.' }
+      format.json { head :no_content }
+    end
+  end
+
+  def interrupt
+    # 要求書の処理を中断終了する
+    @request_application.interrupt
+    respond_to do |format|
+      format.html { redirect_to request_applications_url, notice: 'Request application was successfully flow interrupted.' }
       format.json { head :no_content }
     end
   end
