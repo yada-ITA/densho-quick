@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160229074023) do
+ActiveRecord::Schema.define(version: 20160303030632) do
 
   create_table "depts", force: :cascade do |t|
     t.string   "name"
@@ -24,9 +24,10 @@ ActiveRecord::Schema.define(version: 20160229074023) do
     t.integer  "order"
     t.boolean  "project_flg"
     t.integer  "dept_id"
-    t.datetime "created_at",        null: false
-    t.datetime "updated_at",        null: false
+    t.datetime "created_at",                 null: false
+    t.datetime "updated_at",                 null: false
     t.boolean  "reject_permission"
+    t.boolean  "first_to_revert_permission"
   end
 
   add_index "flow_orders", ["dept_id"], name: "index_flow_orders_on_dept_id"
@@ -39,6 +40,9 @@ ActiveRecord::Schema.define(version: 20160229074023) do
     t.datetime "updated_at",             null: false
     t.integer  "history_no"
   end
+
+  add_index "flows", ["dept_id"], name: "index_flows_on_dept_id"
+  add_index "flows", ["request_application_id"], name: "index_flows_on_request_application_id"
 
   create_table "progresses", force: :cascade do |t|
     t.integer  "flow_id"

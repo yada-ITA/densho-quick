@@ -12,38 +12,43 @@ class Flow < ActiveRecord::Base
     self.history_no = 1
   end
 
-  # 進捗を進める
+  # 進捗を１つ進める
   def proceed
     # 進捗状況が紐付いていない時は、新たな進捗情報を作成する
     if progress.nil?
-      progress = Progress.new
-      progress.flow_id = id
-      progress.in_date = Time.current
-      progress.save
+      Progress.new_flow(id)
     else
-      progress = self.progress
-      progress.out_date = Time.current
-      progress.save
+      progress.finished
       # 次のフローも合わせて生成。最後の時はcloseする。
       next_flow if FlowOrder.maximum('order') > order
       RequestApplication.closed(request_application_id) if FlowOrder.maximum('order') == order
     end
   end
 
-  # 進捗を戻す
+  # 進捗を１つ戻す
   def retreat
-    # 戻った直後の進捗は、進捗状況が新たに一つでき、一つフローを戻すイメージ
-    progress = Progress.new
-    progress.flow_id = id
-    progress.in_date = Time.current
-    progress.save
-    # 戻った直後のフローも合わせて生成。
+    # 戻った直後の進捗は、進捗状況が新たに一つできる。
+    Progress.new_flow(id)
+    # 戻った直後のフローも合わせて生成。（１つフローが戻る）
     back_flow
   end
 
-  # 差し戻しができるかどうか
+  # 進捗を最初に戻す
+  def first_to_revert
+    # 戻った直後の進捗は、進捗状況が新たに一つできる。
+    Progress.new_flow(id)
+    # 戻った直後のフローも合わせて生成。（最初にフローが戻る）
+    first_flow
+  end
+
+  # 1つ前の差し戻しができるかどうか
   def reject?
-    FlowOrder.find_by(order: order).reject_permission
+    FlowOrder.find_by(order: order).reject_permission?
+  end
+
+  # 最初への差し戻しができるかどうか
+  def first_to_revert?
+    FlowOrder.find_by(order: order).first_to_revert_permission?
   end
 
   private
@@ -67,6 +72,20 @@ class Flow < ActiveRecord::Base
     flow = Flow.new
     flow.request_application_id = request_application_id
     flow.order = order - 1
+    flow.history_no = history_no + 1
+    flow.dept_id = if FlowOrder.find_by(order: flow.order).project_flg
+                     RequestApplication.find(request_application_id).project_id
+                   else
+                     FlowOrder.find_by(order: flow.order).dept_id
+                   end
+    flow.save
+  end
+
+  # 一番最初のフローに戻る
+  def first_flow
+    flow = Flow.new
+    flow.request_application_id = request_application_id
+    flow.order = 1
     flow.history_no = history_no + 1
     flow.dept_id = if FlowOrder.find_by(order: flow.order).project_flg
                      RequestApplication.find(request_application_id).project_id

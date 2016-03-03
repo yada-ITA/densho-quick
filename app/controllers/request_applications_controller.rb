@@ -1,5 +1,5 @@
 class RequestApplicationsController < ApplicationController
-  before_action :set_request_application, only: [:show, :edit, :update, :destroy, :regist, :reject, :interrupt]
+  before_action :set_request_application, only: [:show, :edit, :update, :destroy, :regist, :reject, :interrupt, :first_to_revert]
 
   # GET /request_applications
   # GET /request_applications.json
@@ -78,7 +78,6 @@ class RequestApplicationsController < ApplicationController
   def reject
     # 最新flowのprogressを生成する。(進捗を戻す)
     @request_application.flows.last.retreat
-
     respond_to do |format|
       format.html { redirect_to request_applications_url, notice: 'Request application was successfully progress changed.' }
       format.json { head :no_content }
@@ -90,6 +89,15 @@ class RequestApplicationsController < ApplicationController
     @request_application.interrupt
     respond_to do |format|
       format.html { redirect_to request_applications_url, notice: 'Request application was successfully flow interrupted.' }
+      format.json { head :no_content }
+    end
+  end
+
+  def first_to_revert
+    # フローの始めに戻す・。
+    @request_application.flows.last.first_to_revert
+    respond_to do |format|
+      format.html { redirect_to request_applications_url, notice: 'Request application was successfully progress changed.' }
       format.json { head :no_content }
     end
   end

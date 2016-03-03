@@ -4,6 +4,7 @@ Rails.application.routes.draw do
   get 'request_applications/:id/regist' => 'request_applications#regist', as: :regist_progress
   get 'request_applications/:id/reject' => 'request_applications#reject', as: :reject_progress
   get 'request_applications/:id/interrupt' => 'request_applications#interrupt', as: :interrupt_progress
+  get 'request_applications/:id/revert' => 'request_applications#first_to_revert', as: :revert_progress
 
 
   resources :progresses

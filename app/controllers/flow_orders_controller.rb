@@ -70,6 +70,6 @@ class FlowOrdersController < ApplicationController
 
   # Never trust parameters from the scary internet, only allow the white list through.
   def flow_order_params
-    params.require(:flow_order).permit(:order, :project_flg, :dept_id, :reject_permission)
+    params.require(:flow_order).permit(:order, :project_flg, :dept_id, :reject_permission, :first_to_revert_permission)
   end
 end
