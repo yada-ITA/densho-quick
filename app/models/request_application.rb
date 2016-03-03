@@ -32,6 +32,7 @@ class RequestApplication < ActiveRecord::Base
     !initial? && !close? && flows.order(:history_no).last.order == 1
   end
 
+  # 削除できるフローの状態かとうか
   def delete_permit?
     initial?
   end
