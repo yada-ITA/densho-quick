@@ -51,6 +51,12 @@ class RequestApplication < ActiveRecord::Base
     close? && flows.order(:history_no).last.order == 1
   end
 
+  #今、フローの何番目身にいるか
+  def current_order
+   Flow.where(request_application_id: id).order(:history_no).last.try(:order)
+  end
+  
+
   private
 
   def initial?

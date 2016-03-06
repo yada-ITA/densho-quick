@@ -64,6 +64,7 @@ class Flow < ActiveRecord::Base
   end
 
 
+
   private
 
   # 次のフローへ進む

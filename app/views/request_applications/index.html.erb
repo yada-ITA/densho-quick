@@ -27,6 +27,7 @@
 
   <tbody>
     <% @request_applications.each do |request_application| %>
+    <% current_order = request_application.current_order %>
       <tr>
         <td><%= request_application.management_no %></td>
         <td><%= request_application.project.try(:name) %></td>
@@ -40,7 +41,7 @@
         <td>
           <%= ( flow.progress.try(:in_date) || (link_to 'Start', regist_progress_path(request_application) unless request_application.close?
  )) %><br>
-          <%= ( flow.progress.try(:out_date) || (link_to 'End', regist_progress_path(request_application) unless (flow.progress.try(:in_date).blank?  ||  request_application.close? ) ) ) %> 
+          <%= ( flow.progress.try(:out_date) || (link_to 'End', regist_progress_path(request_application) unless (flow.progress.try(:in_date).blank?  ||  request_application.close?  || current_order != flow.order) ) ) %> 
         </td>
          <% end %>
          <% (@flow_orders.count - request_application.flows.maximum(:order)).times do %>
