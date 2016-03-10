@@ -2,8 +2,8 @@ class Flow < ActiveRecord::Base
   belongs_to :request_application
   belongs_to :dept
   has_one :progress, dependent: :destroy
-#  scope :latest_flows, -> (request_application_id) { where(request_application_id: request_application_id).group(:order).having(" history_no= max(history_no)").order(:order) }
-  scope :latest_flows, -> (latest_ids) { where(id: latest_ids).order(:order)}
+  #  scope :latest_flows, -> (request_application_id) { where(request_application_id: request_application_id).group(:order).having(" history_no= max(history_no)").order(:order) }
+  scope :latest_flows, -> (latest_ids) { where(id: latest_ids).order(:order) }
 
   # 初期フローを作成する。
   def init_flow
@@ -53,17 +53,15 @@ class Flow < ActiveRecord::Base
   end
 
   def self.latest_ids(request_application_id)
-   flows = Flow.where(request_application_id: request_application_id).order(:order,:history_no).pluck(:order,:history_no,:id)
-   flows_order = flows.group_by{|flow| flow[0]}
-    latest_ids = Array.new
-    flows_order.each do |order, fls|
-      latest_id = fls.max_by{|f| f[1]}
+    flows = Flow.where(request_application_id: request_application_id).order(:order, :history_no).pluck(:order, :history_no, :id)
+    flows_order = flows.group_by { |flow| flow[0] }
+    latest_ids = []
+    flows_order.each do |_order, fls|
+      latest_id = fls.max_by { |f| f[1] }
       latest_ids.push(latest_id[2])
     end
-    return latest_ids
+    latest_ids
   end
-
-
 
   private
 

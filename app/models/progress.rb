@@ -12,15 +12,14 @@ class Progress < ActiveRecord::Base
   # 進捗完了とする （終了日時をセットする)
   def finished
     self.out_date = Time.current
-    self.save
+    save
   end
 
   # 中断とする（開始日時と終了日時をセットする。開始日時はデータが入っていない場合のみ）
   def interrupted
     time = Time.current
-    self.in_date = time if self.in_date.blank?
+    self.in_date = time if in_date.blank?
     self.out_date = time
-    self.save
+    save
   end
-
 end
