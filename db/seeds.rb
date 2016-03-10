@@ -32,7 +32,7 @@ Dept.delete_all
 # 部署のマスターデータ
 Dept.create([
               { name: "資材部", project: false, id: 1 },
-              { name: "技術情報管理部", project: false, id: 2 },
+              { name: "技術情報課", project: false, id: 2 },
               { name: "プロジェクトA",      project: true,   id: 3 },
               { name: "プロジェクトB",      project: true,   id: 4 },
               { name: "プロジェクトC",      project: true,   id: 5 }
