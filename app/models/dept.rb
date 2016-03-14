@@ -3,5 +3,4 @@ class Dept < ActiveRecord::Base
   scope :departments, -> { where(project: false) }
 
   validates :name, uniqueness: true, presence: true
-
 end
