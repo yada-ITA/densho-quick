@@ -4,7 +4,7 @@ class DeptsController < ApplicationController
   # GET /depts
   # GET /depts.json
   def index
-    @depts = Dept.all
+    @depts = Dept.all.order(:project, :name)
   end
 
   # GET /depts/1
