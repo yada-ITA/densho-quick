@@ -1,4 +1,5 @@
 Rails.application.routes.draw do
+  resources :vendors
   root 'request_applications#index'
   resources :request_applications
   get 'request_applications/:id/regist' => 'request_applications#regist', as: :regist_progress
