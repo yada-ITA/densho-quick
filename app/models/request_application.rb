@@ -1,9 +1,14 @@
 class RequestApplication < ActiveRecord::Base
+  attr_accessor :vendor_code
   has_many :flows, dependent: :destroy
+  has_one :vendor
   belongs_to :project, class_name: "Dept"
   mount_uploader :filename, FileUploader
 
   validates :management_no, uniqueness: true, presence: true
+  validates :vendor_code, length: { in: 4..6 }, format: { with: /[A-Za-z0-9]/ }
+  validates :vendor_id, presence: { message: "vendor code has not been registered"}
+
 
   def self.closed(id)
     request_application = RequestApplication.find(id)
@@ -51,9 +56,20 @@ class RequestApplication < ActiveRecord::Base
     close? && flows.order(:history_no).last.order == 1
   end
 
-  # 今、フローの何番目身にいるか
+  # 今、フローの何番目にいるか
   def current_order
     Flow.where(request_application_id: id).order(:history_no).last.try(:order)
+  end
+
+
+  # ベンダーコードから、ベンダーIDをセットする。
+  # データがない場合は、nilをセットする。
+  def vendor_setting
+    begin
+      self.vendor_id = Vendor.find_by(code: self.vendor_code).id
+    rescue
+      self.vendor_id = nil
+    end
   end
 
   private
