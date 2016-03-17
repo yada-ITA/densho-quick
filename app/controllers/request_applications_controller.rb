@@ -112,6 +112,6 @@ class RequestApplicationsController < ApplicationController
 
   # Never trust parameters from the scary internet, only allow the white list through.
   def request_application_params
-    params.require(:request_application).permit(:management_no, :emargency, :filename, :request_date, :preferred_date, :close, :project_id, :memo, :vendor_code)
+    params.require(:request_application).permit(:management_no, :emargency, :filename, :request_date, :preferred_date, :close, :project_id, :memo, :vendor_code, :model_id)
   end
 end
