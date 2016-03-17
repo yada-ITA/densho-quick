@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160317073739) do
+ActiveRecord::Schema.define(version: 20160317231142) do
 
   create_table "depts", force: :cascade do |t|
     t.string   "name"
@@ -39,6 +39,7 @@ ActiveRecord::Schema.define(version: 20160317073739) do
     t.datetime "created_at",             null: false
     t.datetime "updated_at",             null: false
     t.integer  "history_no"
+    t.text     "memo"
   end
 
   add_index "flows", ["dept_id"], name: "index_flows_on_dept_id"

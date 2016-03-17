@@ -70,6 +70,6 @@ class FlowsController < ApplicationController
 
   # Never trust parameters from the scary internet, only allow the white list through.
   def flow_params
-    params.require(:flow).permit(:request_application_id, :order, :dept_id)
+    params.require(:flow).permit(:request_application_id, :order, :dept_id, :memo)
   end
 end
