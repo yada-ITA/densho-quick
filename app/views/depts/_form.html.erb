@@ -15,10 +15,13 @@
     <%= f.label :name %><br>
     <%= f.text_field :name %>
   </div>
+
   <div class="field">
     <%= f.label :project %><br>
-    <%= f.check_box :project %>
+    <%= f.radio_button 'project', true, {:checked => true} %>プロジェクト　　
+    <%= f.radio_button 'project', false, {} %>部署
   </div>
+
   <div class="actions">
     <%= f.submit %>
   </div>

@@ -49,12 +49,12 @@
 
   <div class="field">
     <%= f.label :model_id %><br>
-     <%= f.collection_select :model_id, Model.all, :id, :name , include_blank: true %>
+     <%= f.collection_select :model_id, Model.all, :id, :name  %>
   </div>
 
   <div class="field">
     <%= f.label :section_id %><br>
-    <%= f.collection_select :section_id, Section.all, :id, :name , include_blank: true %>
+    <%= f.collection_select :section_id, Section.all, :id, :name  %>
   </div>
 
 
