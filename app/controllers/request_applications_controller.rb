@@ -109,12 +109,17 @@ class RequestApplicationsController < ApplicationController
   # Use callbacks to share common setup or constraints between actions.
   def set_request_application
     @request_application = RequestApplication.find(params[:id])
-    @request_application.vendor_code = Vendor.find(@request_application.vendor_id).try(:code)
+    begin
+      @request_application.vendor_code = Vendor.find(@request_application.vendor_id).code
+    rescue
+      @request_application.vendor_code = nil
+    end
+
   end
 
   # Never trust parameters from the scary internet, only allow the white list through.
   def request_application_params
-    params.require(:request_application).permit(:management_no, :emargency, :filename, :request_date, :preferred_date, :close, :project_id, :memo, :vendor_code, :model_id)
+    params.require(:request_application).permit(:management_no, :emargency, :filename, :request_date, :preferred_date, :close, :project_id, :memo, :vendor_code, :model_id, :section_id)
   end
 
   def set_vendor_id

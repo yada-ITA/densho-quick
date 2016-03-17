@@ -13,7 +13,7 @@ class RequestApplication < ActiveRecord::Base
   def self.closed(id)
     request_application = RequestApplication.find(id)
     request_application.close = true
-    request_application.save
+    request_application.save(validate: false)
   end
 
   # 通常closeかどうか

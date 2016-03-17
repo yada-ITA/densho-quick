@@ -52,6 +52,12 @@
      <%= f.collection_select :model_id, Model.all, :id, :name , include_blank: true %>
   </div>
 
+  <div class="field">
+    <%= f.label :section_id %><br>
+    <%= f.collection_select :section_id, Section.all, :id, :name , include_blank: true %>
+  </div>
+
+
   <div class="actions">
     <%= f.submit %>
   </div>

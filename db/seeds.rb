@@ -60,3 +60,44 @@ if Rails.env.development?
 else
   FlowOrder.connection.execute("SELECT SETVAL('flow_orders_id_seq', 4)")
 end
+
+# 担当課のマスターデータ
+Section.create([
+              { name: "国産部品",  id: 1 },
+              { name: "外注", id: 2 },
+              { name: "材料",   id: 3 },
+              { name: "輸入備品",   id: 4 },
+              { name: "調計１",   id: 5 },
+              { name: "調計２",   id: 6 },
+              { name: "調計３",   id: 7 }
+            ])
+if Rails.env.development?
+  Section.connection.execute("update sqlite_sequence set seq=7 where name='sections'")
+else
+  Section.connection.execute("SELECT SETVAL('sections_id_seq', 7)")
+end
+
+# 機種のマスターデータ
+Model.create([
+              { code: "A01", name: "機種その１",  id: 1 },
+              { code: "B01", name: "機種その２", id: 2 },
+              { code: "C01", name: "機種その３",  id: 3 }
+            ])
+if Rails.env.development?
+  Model.connection.execute("update sqlite_sequence set seq=3 where name='models'")
+else
+  Model.connection.execute("SELECT SETVAL('models_id_seq', 3)")
+end
+
+# ベンダーコードのマスターデータ
+Vendor.create([
+              { code: "A0001", name: "ベンダーその１",  id: 1 },
+              { code: "B0001", name: "ベンダーその２", id: 2 },
+              { code: "C0001", name: "ベンダーその３",  id: 3 }
+            ])
+if Rails.env.development?
+  Vendor.connection.execute("update sqlite_sequence set seq=3 where name='vendors'")
+else
+  Vendor.connection.execute("SELECT SETVAL('vendors_id_seq', 3)")
+end
+
