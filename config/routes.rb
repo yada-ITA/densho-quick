@@ -1,4 +1,6 @@
 Rails.application.routes.draw do
+  resources :sections
+  resources :models
   resources :vendors
   root 'request_applications#index'
   resources :request_applications
