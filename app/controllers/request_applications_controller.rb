@@ -5,7 +5,10 @@ class RequestApplicationsController < ApplicationController
   # GET /request_applications
   # GET /request_applications.json
   def index
-    @request_applications = RequestApplication.all.order(:created_at).reverse_order
+#    @request_applications = RequestApplication.all.order(:created_at).reverse_order
+    @q = RequestApplication.ransack(params[:q])
+    @request_applications = @q.result.order(:created_at).reverse_order
+
     @flow_orders = FlowOrder.order_list
   end
 

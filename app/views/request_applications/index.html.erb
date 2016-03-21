@@ -2,6 +2,43 @@
 
 <h1>Listing Request Applications</h1>
 
+ <%= search_form_for(@q, method: :get) do |f| %>
+      <div class="row">
+
+        <div class="col-sm-3">
+          <div class="form-group">
+            <%= f.label :management_no %>
+            <%= f.text_field :management_no_cont, class: "form-control", placeholder: "部分一致" %>
+          </div>
+        </div>
+        <div class="col-sm-2">
+          <div class="form-group">
+            <%= f.label :model_id %>
+            <%= f.collection_select :model_id_eq, Model.all, :id, :name, include_blank: true %>
+          </div>
+        </div>
+
+        <div class="col-sm-2">
+          <div class="form-group">
+            <%= f.label :section_id %>
+            <%= f.collection_select :section_id_eq, Section.all, :id, :name, include_blank: true %>
+          </div>
+        </div>
+
+        <div class="col-sm-2">
+          <div class="form-group">
+            <%= f.label :project_id %>
+            <%= f.collection_select :project_id_eq, Dept.projects, :id, :name, include_blank: true %>
+          </div>
+        </div>
+
+
+      </div>
+      <%= f.submit '検索', class: "btn btn-primary" %>
+      <%= link_to 'クリア', url_for, class: "btn btn-default" %>
+    <% end %>
+
+
 <table class="table">
   <thead>
     <tr>
