@@ -59,3 +59,4 @@ group :development do
 end
 
 gem 'carrierwave'
+gem 'ransack'
