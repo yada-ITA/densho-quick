@@ -7,8 +7,7 @@ class RequestApplication < ActiveRecord::Base
 
   validates :management_no, uniqueness: true, presence: true
   validates :vendor_code, length: { in: 4..6 }, format: { with: /[A-Za-z0-9]/ }
-  validates :vendor_id, presence: { message: "vendor code has not been registered"}
-
+  validates :vendor_id, presence: { message: "vendor code has not been registered" }
 
   def self.closed(id)
     request_application = RequestApplication.find(id)
@@ -61,15 +60,12 @@ class RequestApplication < ActiveRecord::Base
     Flow.where(request_application_id: id).order(:history_no).last.try(:order)
   end
 
-
   # ベンダーコードから、ベンダーIDをセットする。
   # データがない場合は、nilをセットする。
   def vendor_setting
-    begin
-      self.vendor_id = Vendor.find_by(code: self.vendor_code).id
-    rescue
-      self.vendor_id = nil
-    end
+    self.vendor_id = Vendor.find_by(code: vendor_code).id
+  rescue
+    self.vendor_id = nil
   end
 
   private

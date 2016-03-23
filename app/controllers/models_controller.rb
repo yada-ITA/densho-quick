@@ -62,13 +62,14 @@ class ModelsController < ApplicationController
   end
 
   private
-    # Use callbacks to share common setup or constraints between actions.
-    def set_model
-      @model = Model.find(params[:id])
-    end
 
-    # Never trust parameters from the scary internet, only allow the white list through.
-    def model_params
-      params.require(:model).permit(:code, :name)
-    end
+  # Use callbacks to share common setup or constraints between actions.
+  def set_model
+    @model = Model.find(params[:id])
+  end
+
+  # Never trust parameters from the scary internet, only allow the white list through.
+  def model_params
+    params.require(:model).permit(:code, :name)
+  end
 end
