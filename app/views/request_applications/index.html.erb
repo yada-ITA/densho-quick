@@ -34,6 +34,12 @@
         </div>
       </div>
 
+      <div class="col-sm-2">
+        <div class="form-group">
+            <%= f.label :close %>
+            <%= f.check_box :close_eq %>
+        </div>
+      </div>
     </div>
 
 
@@ -41,8 +47,8 @@
       <div class="col-sm-12">
         <%= f.label :preferred_date %>
         <div class="form-inline">
-          <%= f.date_select :preferred_date_gteq, {include_blank: true, use_month_numbers: true, date_separator: ' / '}, class: "form-control input-sm"%>〜
-          <%= f.date_select :preferred_date_lteq, {include_blank: true, use_month_numbers: true, date_separator: ' / '}, class: "form-control input-sm" %>
+          <%= f.date_select :preferred_date_gteq, {include_blank: true, use_month_numbers: true, date_separator: ' ／ '}, class: "form-control input-sm"%>　～　
+          <%= f.date_select :preferred_date_lteq, {include_blank: true, use_month_numbers: true, date_separator: ' ／ '}, class: "form-control input-sm" %>
         </div>
       </div>
     </div>
