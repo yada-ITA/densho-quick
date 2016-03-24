@@ -2,6 +2,8 @@ class RequestApplication < ActiveRecord::Base
   attr_accessor :vendor_code
   has_many :flows, dependent: :destroy
   belongs_to :vendor
+  belongs_to :section
+  belongs_to :model
   belongs_to :project, class_name: "Dept"
   mount_uploader :filename, FileUploader
 

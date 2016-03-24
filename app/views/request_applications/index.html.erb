@@ -14,6 +14,10 @@
       <th>Request date</th>
       <th>Preferred date</th>
       <th>Close</th>
+      <th>vendor</th>
+      <th>model</th>
+      <th>section</th>
+
       <th>|</th>
          <% @flow_orders.each do |flow_order| %>
         <th>
@@ -38,6 +42,10 @@
         <td><%= request_application.request_date %></td>
         <td><%= request_application.preferred_date %></td>
         <td><%= request_application.close_status %></td>
+        <td><%= "#{request_application.vendor.try(:name)} ( #{request_application.vendor.try(:code)} )" %></td>
+        <td><%= request_application.model.try(:code) %></td>
+        <td><%= request_application.section.try(:name) %></td>
+
         <td>|</td>
         <% request_application.flows.latest_flows(Flow.latest_ids(request_application.id)).each do |flow| %>
         <td>
