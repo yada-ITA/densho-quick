@@ -35,33 +35,26 @@
   <%= simple_format(@request_application.memo) %>
 </p>
 
+<p>
+  <strong>vendor</strong>
+  <%= "#{@request_application.vendor.try(:name)} ( #{@request_application.vendor.try(:code)} )" %>
+</p>
+
+<p>
+  <strong>model</strong>
+<%= @request_application.model.try(:code) %>
+
+</p>
+
+<p>
+  <strong>section</strong>
+  <%= @request_application.section.try(:name) %>
+</p>
+
+
 <hr>
 
-<h3>履歴</h3>
-
-<table class="table">
-  <thead>
-    <tr>
-      <th>History_no</th>
-      <th>Order</th>
-      <th>Dept</th>
-      <th>Start</th>
-      <th>End</th>
-    </tr>
-  </thead>
-
-  <tbody>
-    <% @request_application.flows.each do |flow| %>
-      <tr>
-        <td><%= flow.history_no %></td>
-        <td><%= flow.order %></td>
-        <td><%= flow.dept.try(:name) %></td>
-         <td><%= flow.progress.try(:in_date) %></td>
-         <td><%= flow.progress.try(:out_date) %></td>
-      </tr>
-    <% end %>
-  </tbody>
-</table>
+<%= render 'history'  %>
 
 
 <% unless @request_application.close? %>

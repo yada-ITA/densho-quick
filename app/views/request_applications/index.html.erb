@@ -51,7 +51,7 @@
         <td>
           <%= ( flow.progress.try(:in_date) || (link_to 'Start', regist_progress_path(request_application) unless request_application.close?
  )) %><br>
-          <%= ( flow.progress.try(:out_date) || (link_to 'End', regist_progress_path(request_application) unless (flow.progress.try(:in_date).blank?  ||  request_application.close?  || current_order != flow.order) ) ) %> 
+          <%= ( flow.progress.try(:out_date) || (link_to 'End', regist_memo_path(request_application) unless (flow.progress.try(:in_date).blank?  ||  request_application.close?  || current_order != flow.order) ) ) %> 
         </td>
          <% end %>
          <% (@flow_orders.count - request_application.flows.maximum(:order)).times do %>
@@ -61,9 +61,9 @@
         <%= (link_to 'Edit', edit_request_application_path(request_application)) unless request_application.close? %>
         <%= (link_to 'Destroy', request_application, method: :delete, data: { confirm: 'Are you sure?' })  if request_application.delete_permit? %>
       </td>
-        <td><%= link_to "差戻" , reject_progress_path(request_application) if request_application.flows.order(:history_no).last.reject? %></td>
-        <td><%= link_to "最初に差戻" , revert_progress_path(request_application) if request_application.flows.order(:history_no).last.first_to_revert? %></td>
-        <td><%= link_to "中断" , interrupt_progress_path(request_application)  if request_application.interrupt_permit? %></td>
+        <td><%= link_to "差戻" , reject_memo_path(request_application) if request_application.flows.order(:history_no).last.reject? %></td>
+        <td><%= link_to "最初に差戻" , revert_memo_path(request_application) if request_application.flows.order(:history_no).last.first_to_revert? %></td>
+        <td><%= link_to "中断" , interrupt_memo_path(request_application)  if request_application.interrupt_permit? %></td>
       </tr>
     <% end %>
   </tbody>

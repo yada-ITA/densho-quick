@@ -4,11 +4,25 @@ Rails.application.routes.draw do
   resources :vendors
   root 'request_applications#index'
   resources :request_applications
-  get 'request_applications/:id/regist' => 'request_applications#regist', as: :regist_progress
-  get 'request_applications/:id/reject' => 'request_applications#reject', as: :reject_progress
-  get 'request_applications/:id/interrupt' => 'request_applications#interrupt', as: :interrupt_progress
-  get 'request_applications/:id/revert' => 'request_applications#first_to_revert', as: :revert_progress
 
+  get 'request_applications/:id/regist_memo' => 'request_applications#regist_memo', as: :regist_memo
+  get 'request_applications/:id/regist' => 'request_applications#regist', as: :regist_progress
+  patch 'request_applications/:id/regist' => 'request_applications#regist', as: :regist_confirm
+
+  get 'request_applications/:id/reject_memo' => 'request_applications#reject_memo', as: :reject_memo
+  get 'request_applications/:id/reject' => 'request_applications#reject', as: :reject_progress
+  patch 'request_applications/:id/reject' => 'request_applications#reject', as: :reject_confirm
+
+  get 'request_applications/:id/interrupt_memo' => 'request_applications#interrupt_memo', as: :interrupt_memo
+  get 'request_applications/:id/interrupt' => 'request_applications#interrupt', as: :interrupt_progress
+  patch 'request_applications/:id/interrupt' => 'request_applications#interrupt', as: :interrupt_confirm
+
+  get 'request_applications/:id/revert_memo' => 'request_applications#first_to_revert_memo', as: :revert_memo
+  get 'request_applications/:id/revert' => 'request_applications#first_to_revert', as: :revert_progress
+  patch 'request_applications/:id/revert' => 'request_applications#first_to_revert', as: :revert_confirm
+
+
+  post 'vendors/get_name' => 'vendors#get_name'
 
   resources :progresses
   resources :flows

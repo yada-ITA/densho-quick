@@ -60,3 +60,4 @@ end
 
 gem 'carrierwave'
 gem 'ransack'
+gem "jquery-turbolinks"

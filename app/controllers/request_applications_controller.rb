@@ -1,6 +1,7 @@
 class RequestApplicationsController < ApplicationController
-  before_action :set_request_application, only: [:show, :edit, :update, :destroy, :regist, :reject, :interrupt, :first_to_revert]
+  before_action :set_request_application, only: [:show, :edit, :update, :destroy, :regist, :reject, :interrupt, :first_to_revert,:regist_memo, :reject_memo, :interrupt_memo, :first_to_revert_memo]
   before_action :set_vendor_id, only: [:update]
+  before_action :set_memo, only: [ :regist, :reject, :interrupt, :first_to_revert]
 
   # GET /request_applications
   # GET /request_applications.json
@@ -72,6 +73,7 @@ class RequestApplicationsController < ApplicationController
 
   def regist
     # 最新flowのprogressを生成する。（進捗を進める）
+    @request_application.flows.last.set_memo(@memo)
     @request_application.flows.last.proceed
 
     respond_to do |format|
@@ -82,7 +84,9 @@ class RequestApplicationsController < ApplicationController
 
   def reject
     # 最新flowのprogressを生成する。(進捗を戻す)
+    @request_application.flows.last.set_memo(@memo)
     @request_application.flows.last.retreat
+
     respond_to do |format|
       format.html { redirect_to request_applications_url, notice: 'Request application was successfully progress changed.' }
       format.json { head :no_content }
@@ -101,10 +105,23 @@ class RequestApplicationsController < ApplicationController
   def first_to_revert
     # フローの始めに戻す・。
     @request_application.flows.last.first_to_revert
+
     respond_to do |format|
       format.html { redirect_to request_applications_url, notice: 'Request application was successfully progress changed.' }
       format.json { head :no_content }
     end
+  end
+
+  def regist_memo
+  end
+
+  def reject_memo
+  end
+
+  def interrupt_memo
+  end
+
+  def first_to_return_memo
   end
 
   private
@@ -121,11 +138,18 @@ class RequestApplicationsController < ApplicationController
 
   # Never trust parameters from the scary internet, only allow the white list through.
   def request_application_params
-    params.require(:request_application).permit(:management_no, :emargency, :filename, :request_date, :preferred_date, :close, :project_id, :memo, :vendor_code, :model_id, :section_id)
+    params.require(:request_application).permit(:management_no, :emargency, :filename, :request_date, :preferred_date, :close, :project_id, :memo, :vendor_code, :model_id, :section_id, flow_attributes: [:memo])
   end
 
   def set_vendor_id
     @request_application.vendor_id = Vendor.find_by(code: params["request_application"]["vendor_code"]).try(:id)
     @request_application.save
   end
+
+  def set_memo
+    @memo = params[:flow][:memo].presence if params[:flow].present?
+    @request_application.flows.last.set_memo(@memo)
+  end
+
 end
+

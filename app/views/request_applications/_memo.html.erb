@@ -1,0 +1,14 @@
+<%= form_for(@request_application, url: url ) do |f| %>
+
+  <%= fields_for @request_application.flows.order(:history_no).last do |flow| %>
+    <div class="field">
+      <%= flow.text_area :memo %>
+    </div>
+  <% end %>
+
+  <div class="actions">
+    <%= f.submit %>
+  </div>
+
+<% end %>
+
