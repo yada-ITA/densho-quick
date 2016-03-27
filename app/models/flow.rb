@@ -65,10 +65,12 @@ class Flow < ActiveRecord::Base
   end
 
   def self.current_ids(dept_id)
-    current_flows = Flow.current_flows.pluck(:request_application_id, :dept_id)
+#    current_flows = Flow.current_flows.pluck(:request_application_id, :dept_id)
+    flows = Flow.order("request_application_id, history_no desc").group(:request_application_id).pluck(:request_application_id, :history_no, :dept_id)
+
     targer_ids = []
-    current_flows.each do |id, dept|
-      targer_ids.push(id.to_i) if dept == dept_id.to_i
+    flows.each do |flow|
+      targer_ids.push(flow[0]) if flow[2] == dept_id.to_i
     end
     targer_ids
   end
