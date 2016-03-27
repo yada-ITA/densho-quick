@@ -30,6 +30,7 @@ FlowOrder.delete_all
 Dept.delete_all
 
 # 部署のマスターデータ
+# Ransackで、自前のscope利用時に、値に1を渡すとエラーとなるため、idに1を利用しないように変更。
 Dept.create([
               { name: "資材部", project: false, id: 2 },
               { name: "技術情報課", project: false, id: 3 },
@@ -49,10 +50,10 @@ end
 
 # フロー順のマスターデータ
 FlowOrder.create([
-                   { order: 1,  project_flg: false,  dept_id: 1,  reject_permission: false, first_to_revert_permission: false, id: 1 },
+                   { order: 1,  project_flg: false,  dept_id: 2,  reject_permission: false, first_to_revert_permission: false, id: 1 },
                    { order: 2,  project_flg: true,  dept_id: nil, reject_permission: true,  first_to_revert_permission: false, id: 2 },
-                   { order: 3,  project_flg: false,   dept_id: 2, reject_permission: true ,  first_to_revert_permission: true, id: 3 },
-                   { order: 4,  project_flg: false,  dept_id: 1,  reject_permission: false , first_to_revert_permission: false, id: 4 }
+                   { order: 3,  project_flg: false,   dept_id: 3, reject_permission: true ,  first_to_revert_permission: true, id: 3 },
+                   { order: 4,  project_flg: false,  dept_id: 2,  reject_permission: false , first_to_revert_permission: false, id: 4 }
                  ])
 
 if Rails.env.development?
@@ -61,7 +62,9 @@ else
   FlowOrder.connection.execute("SELECT SETVAL('flow_orders_id_seq', 4)")
 end
 
+
 # 担当課のマスターデータ
+Section.delete_all
 Section.create([
               { name: "国産部品",  id: 1 },
               { name: "外注", id: 2 },
@@ -78,6 +81,7 @@ else
 end
 
 # 機種のマスターデータ
+Model.delete_all
 Model.create([
               { code: "A01", name: "機種その１",  id: 1 },
               { code: "B01", name: "機種その２", id: 2 },
@@ -90,6 +94,7 @@ else
 end
 
 # ベンダーコードのマスターデータ
+Vendor.delete_all
 Vendor.create([
               { code: "A0001", name: "ベンダーその１",  id: 1 },
               { code: "B0001", name: "ベンダーその２", id: 2 },
