@@ -22,27 +22,6 @@
   </div>
 
   <div class="field">
-    <%= f.label :emargency %><br>
-    <%= f.check_box :emargency %>
-  </div>
-  <div class="field">
-    <%= f.label :filename %><br>
-    <%= f.file_field :filename %>
-  </div>
-  <div class="field">
-    <%= f.label :request_date %><br>
-    <%= f.date_select :request_date %>
-  </div>
-  <div class="field">
-    <%= f.label :preferred_date %><br>
-    <%= f.date_select :preferred_date %>
-  </div>
-  <div class="field">
-    <%= f.label :memo %><br>
-    <%= f.text_area :memo %>
-  </div>
-
-  <div class="field">
     <%= f.label :vendor_code %><br>
     <%= f.text_field :vendor_code, id: "vendor_id" %>
     <div id="vendor_name"></div>
@@ -59,7 +38,32 @@
   </div>
 
 
+
+  <div class="field">
+    <%= f.label :emargency %><br>
+    <%= f.check_box :emargency %>
+  </div>
+
+  <div class="field">
+    <%= f.label :filename %><br>
+    <%= f.file_field :filename %>
+  </div>
+
+  <div class="field">
+    <%= f.label :request_date %><br>
+    <%= f.date_select :request_date %>
+  </div>
+  <div class="field">
+    <%= f.label :preferred_date %><br>
+    <%= f.date_select :preferred_date %>
+  </div>
+  <div class="field">
+    <%= f.label :memo %><br>
+    <%= f.text_area :memo %>
+  </div>
+
+
   <div class="actions">
-    <%= f.submit %>
+    <%= f.submit class:"btn btn-primary" %>
   </div>
 <% end %>
