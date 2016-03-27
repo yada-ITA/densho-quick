@@ -4,7 +4,7 @@ class Flow < ActiveRecord::Base
   has_one :progress, dependent: :destroy
   #  scope :latest_flows, -> (request_application_id) { where(request_application_id: request_application_id).group(:order).having(" history_no= max(history_no)").order(:order) }
   scope :latest_flows, -> (latest_ids) { where(id: latest_ids).order(:order) }
-  scope :current_flows, ->  { select(:request_application_id,:dept_id).group(:request_application_id).having(" history_no= max(history_no)")}
+  scope :current_flows, ->  { select(:request_application_id, :dept_id).group(:request_application_id).having(" history_no= max(history_no) and dept_id is not null")}
 
 
   # 初期フローを作成する。
