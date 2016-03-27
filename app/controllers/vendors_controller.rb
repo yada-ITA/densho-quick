@@ -62,7 +62,8 @@ class VendorsController < ApplicationController
   end
 
   def get_name
-    @vendor = Vendor.find(1)
+    @vendor = Vendor.find_by(code: params[:code])
+    render text: @vendor.try(:name)
   end
 
   private
