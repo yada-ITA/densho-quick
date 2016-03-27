@@ -66,11 +66,15 @@ class Flow < ActiveRecord::Base
 
   def self.current_ids(dept_id)
 #    current_flows = Flow.current_flows.pluck(:request_application_id, :dept_id)
-    flows = Flow.order("request_application_id, history_no desc").group(:request_application_id).pluck(:request_application_id, :history_no, :dept_id)
+    flows = Flow.group(:request_application_id, :history_no).pluck(:request_application_id, :history_no, :dept_id)
+    current_flows = flows.group_by { |flow| flow[0] }
+
+    latest_ids = []
 
     targer_ids = []
-    flows.each do |flow|
-      targer_ids.push(flow[0]) if flow[2] == dept_id.to_i
+    current_flows.each do |ra_id, fls|
+      latest_id = fls.max_by { |f| f[1] }
+      targer_ids.push(ra_id) if latest_id[2] == dept_id.to_i
     end
     targer_ids
   end
