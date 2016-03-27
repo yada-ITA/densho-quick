@@ -1,7 +1,7 @@
 class RequestApplicationsController < ApplicationController
-  before_action :set_request_application, only: [:show, :edit, :update, :destroy, :regist, :reject, :interrupt, :first_to_revert,:regist_memo, :reject_memo, :interrupt_memo, :first_to_revert_memo]
+  before_action :set_request_application, only: [:show, :edit, :update, :destroy, :regist, :reject, :interrupt, :first_to_revert, :regist_memo, :reject_memo, :interrupt_memo, :first_to_revert_memo]
   before_action :set_vendor_id, only: [:update]
-  before_action :set_memo, only: [ :regist, :reject, :interrupt, :first_to_revert]
+  before_action :set_memo, only: [:regist, :reject, :interrupt, :first_to_revert]
 
   # GET /request_applications
   # GET /request_applications.json
@@ -150,6 +150,4 @@ class RequestApplicationsController < ApplicationController
     @memo = params[:flow][:memo].presence if params[:flow].present?
     @request_application.flows.last.set_memo(@memo)
   end
-
 end
-

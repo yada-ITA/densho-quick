@@ -4,8 +4,7 @@ class Flow < ActiveRecord::Base
   has_one :progress, dependent: :destroy
   #  scope :latest_flows, -> (request_application_id) { where(request_application_id: request_application_id).group(:order).having(" history_no= max(history_no)").order(:order) }
   scope :latest_flows, -> (latest_ids) { where(id: latest_ids).order(:order) }
-  scope :current_flows, ->  { group(:request_application_id).having(" history_no= max(history_no)")}
-
+  scope :current_flows, -> { group(:request_application_id).having(" history_no= max(history_no)") }
 
   # 初期フローを作成する。
   def init_flow
@@ -26,7 +25,6 @@ class Flow < ActiveRecord::Base
       next_flow if FlowOrder.maximum('order') > order
       RequestApplication.closed(request_application_id) if FlowOrder.maximum('order') == order
     end
-
   end
 
   # 進捗を１つ戻す
@@ -68,13 +66,12 @@ class Flow < ActiveRecord::Base
 
   def self.current_ids(dept_id)
     current_flows = Flow.current_flows.pluck(:request_application_id, :dept_id)
-    targer_ids = Array.new
+    targer_ids = []
     current_flows.each do |id, dept|
       targer_ids.push(id.to_i) if dept == dept_id.to_i
     end
     targer_ids
   end
-
 
   def set_memo(memo)
     if memo.present?
@@ -83,8 +80,8 @@ class Flow < ActiveRecord::Base
     end
   end
 
-
   private
+
   # 次のフローへ進む
   def next_flow
     flow = Flow.new
@@ -126,5 +123,4 @@ class Flow < ActiveRecord::Base
                    end
     flow.save
   end
-
 end

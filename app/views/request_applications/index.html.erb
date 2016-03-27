@@ -7,13 +7,13 @@
 <table class="table">
   <thead>
     <tr>
+      <th>E!</th>
+      <th><%= sort_link(@q, :close) %></th>
       <th>Management no</th>
       <th>Project</th>
-      <th>E!</th>
-      <th>Filename</th>
+      <th>File</th>
       <th>Request date</th>
       <th>Preferred date</th>
-      <th>Close</th>
       <th>vendor</th>
       <th>model</th>
       <th>section</th>
@@ -35,13 +35,13 @@
     <% @request_applications.each do |request_application| %>
     <% current_order = request_application.current_order %>
       <tr>
+        <td><%= "緊急" if request_application.emargency %></td>
+        <td><%= request_application.close_status %></td>
         <td><%= request_application.management_no %></td>
         <td><%= request_application.project.try(:name) %></td>
-        <td><%= "緊急" if request_application.emargency %></td>
         <td><%= (link_to "Download" , request_application.filename_url) if request_application.filename_url.present? %></td>
         <td><%= request_application.request_date %></td>
         <td><%= request_application.preferred_date %></td>
-        <td><%= request_application.close_status %></td>
         <td><%= "#{request_application.vendor.try(:name)} ( #{request_application.vendor.try(:code)} )" %></td>
         <td><%= request_application.model.try(:code) %></td>
         <td><%= request_application.section.try(:name) %></td>
@@ -71,4 +71,4 @@
 
 <br>
 
-<%= link_to 'New Request application', new_request_application_path %>
+<%= link_to 'New Request application', new_request_application_path ,class: "btn btn-default" %>

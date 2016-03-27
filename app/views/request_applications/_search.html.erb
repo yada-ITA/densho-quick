@@ -5,11 +5,12 @@
     <div class="row">
       <div class="col-sm-2">
         <div class="form-group">
-          <%= f.label :custom_scope %>
+          <%= f.label :dept_project %>
           <%= f.collection_select :custom_scope, Dept.all, :id, :name, {include_blank: true }, class: "form-control input-sm"%>
         </div>
       </div>
     </div>
+<hr>
 
     <div class="row">
       <div class="col-sm-2">
@@ -45,6 +46,13 @@
         <div class="form-group">
           <%= f.label :project_id %>
           <%= f.collection_select :project_id_eq, Dept.projects, :id, :name, {include_blank: true }, class: "form-control input-sm"%>
+        </div>
+      </div>
+
+      <div class="col-sm-2">
+        <div class="form-group">
+          <%= f.label :close %>
+          <%= f.select :close_eq,[["済/中断",true],["未済", false]],  {prompt: ""}, class: "form-control input-sm"%>
         </div>
       </div>
 
