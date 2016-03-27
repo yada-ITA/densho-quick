@@ -66,7 +66,7 @@ class Flow < ActiveRecord::Base
 
   def self.current_ids(dept_id)
 #    current_flows = Flow.current_flows.pluck(:request_application_id, :dept_id)
-    flows = Flow.group(:request_application_id, :history_no).pluck(:request_application_id, :history_no, :dept_id)
+    flows = Flow.all.pluck(:request_application_id, :history_no, :dept_id)
     current_flows = flows.group_by { |flow| flow[0] }
 
     latest_ids = []
