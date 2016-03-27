@@ -1,8 +1,17 @@
 <div class="well">
 
   <%= search_form_for(@q, method: :get) do |f| %>
-    <div class="row">
 
+    <div class="row">
+      <div class="col-sm-2">
+        <div class="form-group">
+          <%= f.label :custom_scope %>
+          <%= f.collection_select :custom_scope, Dept.all, :id, :name, {include_blank: true }, class: "form-control input-sm"%>
+        </div>
+      </div>
+    </div>
+
+    <div class="row">
       <div class="col-sm-2">
         <div class="form-group">
           <%= f.label :management_no %>

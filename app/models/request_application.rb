@@ -11,6 +11,13 @@ class RequestApplication < ActiveRecord::Base
   validates :vendor_code, length: { in: 4..6 }, format: { with: /[A-Za-z0-9]/ }
   validates :vendor_id, presence: { message: "vendor code has not been registered" }
 
+
+  # custom scope
+  scope :custom_scope, -> (dept_id) {
+   ids = Flow.current_ids(dept_id)
+   where(id: ids) 
+ }
+
   def self.closed(id)
     request_application = RequestApplication.find(id)
     request_application.close = true
@@ -75,4 +82,12 @@ class RequestApplication < ActiveRecord::Base
   def initial?
     flows.order(:order).last.history_no == 1
   end
+
+
+  # for ransack scope
+  def self.ransackable_scopes(auth_object=nil)
+    %i(custom_scope)
+  end
+
+
 end

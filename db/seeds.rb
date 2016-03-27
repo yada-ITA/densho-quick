@@ -31,17 +31,17 @@ Dept.delete_all
 
 # 部署のマスターデータ
 Dept.create([
-              { name: "資材部", project: false, id: 1 },
-              { name: "技術情報課", project: false, id: 2 },
-              { name: "プロジェクトA",      project: true,   id: 3 },
-              { name: "プロジェクトB",      project: true,   id: 4 },
-              { name: "プロジェクトC",      project: true,   id: 5 }
+              { name: "資材部", project: false, id: 2 },
+              { name: "技術情報課", project: false, id: 3 },
+              { name: "プロジェクトA",      project: true,   id: 4 },
+              { name: "プロジェクトB",      project: true,   id: 5 },
+              { name: "プロジェクトC",      project: true,   id: 6 }
             ])
 
 if Rails.env.development?
-  Dept.connection.execute("update sqlite_sequence set seq=5 where name='depts'")
+  Dept.connection.execute("update sqlite_sequence set seq=6 where name='depts'")
 else
-  Dept.connection.execute("SELECT SETVAL('depts_id_seq', 5)")
+  Dept.connection.execute("SELECT SETVAL('depts_id_seq', 6)")
 end
 
 
